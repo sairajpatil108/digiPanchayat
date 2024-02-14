@@ -1,16 +1,16 @@
 // ignore_for_file: camel_case_types
 
-import 'package:digi_panchayat/data/statsticsOverviewTax.dart';
+import 'package:digi_panchayat/data/statisticsOverviewVillagers.dart';
 import 'package:flutter/material.dart';
 
-class taxPage extends StatefulWidget {
-  const taxPage({super.key});
+class villagersDatabasePage extends StatefulWidget {
+  const villagersDatabasePage({super.key});
 
   @override
-  State<taxPage> createState() => _taxPageState();
+  State<villagersDatabasePage> createState() => _villagersDatabasePageState();
 }
 
-class _taxPageState extends State<taxPage> {
+class _villagersDatabasePageState extends State<villagersDatabasePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +72,7 @@ class _taxPageState extends State<taxPage> {
                                       MaterialStateProperty.all(const Size(200, 100)),
                                 ),
                                 onPressed: () {},
-                                child: const Text("View Tax Database")),
+                                child: const Text("create villager profile")),
                             const SizedBox(
                               width: 30,
                             ),
@@ -82,7 +82,7 @@ class _taxPageState extends State<taxPage> {
                                       MaterialStateProperty.all(const Size(200, 100)),
                                 ),
                                 onPressed: () {},
-                                child: const Text("Update Tax Database")),
+                                child: const Text("Update existing profile")),
                           ],
                         ),
                         const SizedBox(
@@ -96,7 +96,7 @@ class _taxPageState extends State<taxPage> {
                                       MaterialStateProperty.all(const Size(200, 100)),
                                 ),
                                 onPressed: () {},
-                                child:const Text("Add new Tax payer")),
+                                child:const Text("delete profile")),
                             const SizedBox(
                               width: 30,
                             ),
@@ -106,7 +106,7 @@ class _taxPageState extends State<taxPage> {
                                       MaterialStateProperty.all(const Size(200, 100)),
                                 ),
                                 onPressed: () {},
-                                child:const Text("view stastics")),
+                                child:const Text("land holdings")),
                           ],
                         )
                       ],
@@ -138,22 +138,23 @@ class _taxPageState extends State<taxPage> {
                         padding:const EdgeInsets.all(10.0),
                         child: Card(
                           child: Padding(
-                            padding:const EdgeInsets.all(20.0),
-                            child: ListView.builder(
-                              itemCount: statisticsDataTax.length,
-                              itemBuilder: (context, index) {
-                                final statistics = statisticsDataTax[index];
-                                return Card(
-                                  color: Theme.of(context).colorScheme.surface,
-                                  child: ListTile(
-                                    title: Text(statistics.attribute),
-                                    subtitle: Text(statistics.data),
-                                    // You can add more ListTile customization here
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
+                              padding:const EdgeInsets.all(20.0),
+                              child: ListView.builder(
+                                itemCount: statisticsDataVillagers.length,
+                                itemBuilder: (context, index) {
+                                  final statistics =
+                                      statisticsDataVillagers[index];
+                                  return Card(
+                                    color:
+                                        Theme.of(context).colorScheme.surface,
+                                    child: ListTile(
+                                      title: Text(statistics.attribute),
+                                      subtitle: Text(statistics.data),
+                                      // You can add more ListTile customization here
+                                    ),
+                                  );
+                                },
+                              )),
                         ),
                       ),
                     ),

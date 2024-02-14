@@ -1,10 +1,12 @@
 import 'package:digi_panchayat/pages/homepage.dart';
 import 'package:digi_panchayat/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(ChangeNotifierProvider(
+      create: (context) => ThemeNotifier(), // Initialize ThemeNotifier
+      child: const MyApp(),
+    ));
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -14,15 +16,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      home: const homePage(),
+    return Consumer<ThemeNotifier>(
+      builder: (context, themeNotifier, child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: themeNotifier.isDarkMode
+            ? ThemeData(useMaterial3: true, colorScheme: darkColorScheme)
+            : ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+        home: const homePage(), // Use correct widget name
+      ),
     );
+  }
+}
+
+class ThemeNotifier extends ChangeNotifier {
+  bool isDarkMode = true; // Initial state
+
+  void toggleTheme() {
+    isDarkMode = !isDarkMode;
+    notifyListeners(); // Notify listeners when theme changes
   }
 }
 
@@ -36,6 +49,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return homePage();
+    return const homePage();
   }
 }

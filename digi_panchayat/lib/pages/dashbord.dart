@@ -1,5 +1,8 @@
+// ignore_for_file: camel_case_types
+
 import 'package:digi_panchayat/data/events.dart';
 import 'package:digi_panchayat/pages/taxPage.dart';
+import 'package:digi_panchayat/pages/villagersDatabase.dart';
 import 'package:flutter/material.dart';
 
 class dashbord extends StatefulWidget {
@@ -24,22 +27,32 @@ class _dashbordState extends State<dashbord> {
               children: <Widget>[
                 ElevatedButton(
                     style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(Size(400, 100)),
+                      fixedSize:
+                          MaterialStateProperty.all(const Size(400, 100)),
                     ),
-                    onPressed: () {},
-                    child: Text("Villager's Database")),
-                SizedBox(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const villagersDatabasePage()));
+                    },
+                    child: const Text("Villager's Database")),
+                const SizedBox(
                   height: 30,
                 ),
                 ElevatedButton(
                     style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(Size(400, 100)),
+                      fixedSize:
+                          MaterialStateProperty.all(const Size(400, 100)),
                     ),
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => taxPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const taxPage()));
                     },
-                    child: Text("Tax"))
+                    child: const Text("Tax"))
               ],
             ),
           ),
@@ -50,7 +63,7 @@ class _dashbordState extends State<dashbord> {
               child: Padding(
                 padding:
                     const EdgeInsets.all(10.0).copyWith(left: 40, right: 40),
-                child: Text("Events"),
+                child: const Text("Events"),
               ),
             ),
             Container(
@@ -58,23 +71,23 @@ class _dashbordState extends State<dashbord> {
               height: MediaQuery.of(context).size.height * 0.6,
               color: Theme.of(context).colorScheme.background,
               child: Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Card(
                   child: Padding(
-                    padding: EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: ListView.builder(
                       itemCount: eventData.length,
                       itemBuilder: (context, index) {
                         final event = eventData[index];
-                        return InkWell(
-                          onTap: () {},
-                          child: Card(
-                            color: Theme.of(context).colorScheme.surface,
-                            child: ListTile(
-                              title: Text(event.eventName),
-                              subtitle: Text(event.dateTime),
-                              // You can add more ListTile customization here
-                            ),
+                        return Card(
+                          color: Theme.of(context).colorScheme.surface,
+                          child: ListTile(
+                            title: Text(event.eventName),
+                            subtitle: Text(event.dateTime),
+                            trailing: ElevatedButton(
+                                onPressed: () {},
+                                child: const Icon(Icons.delete)),
+                            // You can add more ListTile customization here
                           ),
                         );
                       },
@@ -105,58 +118,64 @@ class _dashbordState extends State<dashbord> {
 }
 
 void _showBottomSheet(BuildContext context) {
+  final formKey = GlobalKey<FormState>();
+
+  String eventName = "";
+  String dateTime = "";
+
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    builder: (context) => Container(
-      height: MediaQuery.of(context).size.height * 0.85,
-      decoration: new BoxDecoration(
-        color: Colors.white,
-        borderRadius: new BorderRadius.only(
-          topLeft: const Radius.circular(25.0),
-          topRight: const Radius.circular(25.0),
+    builder: (context) => Form(
+      key: formKey,
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.35,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
+          ),
         ),
-      ),
-      child: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                child: Icon(
-                  Icons.add_task_rounded,
-                  size: 50,
-                  color: Color.fromARGB(255, 52, 255, 157),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              children: [
+                TextFormField(
+                  decoration: const InputDecoration(hintText: "Title"),
+                  validator: (value) =>
+                      value!.isEmpty ? "Please enter a title" : null,
+                  onSaved: (value) => eventName = value!,
                 ),
-                height: 60,
-              ),
+                TextFormField(
+                  decoration: const InputDecoration(hintText: "Date and Time"),
+                  validator: (value) =>
+                      value!.isEmpty ? "Please enter a date and time" : null,
+                  onSaved: (value) => dateTime = value!,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      formKey.currentState!.save();
+                      // Create a new Event object
+                      final newEvent =
+                          Event(eventName: eventName, dateTime: dateTime);
+                      // Add the new event to the list
+                      eventData.add(newEvent);
+                      // Perform any other actions, like saving to a database
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: const Text("Save"),
+                ),
+              ],
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(50, 8, 50, 8),
-              child: TextFormField(
-                decoration: InputDecoration(hintText: "Task"),
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(50, 8, 50, 8),
-              child: TextFormField(
-                decoration: InputDecoration(hintText: "Discription"),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.15,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the bottom sheet
-              },
-              child: Text('Save'),
-            ),
-          ],
+          ),
         ),
       ),
     ),

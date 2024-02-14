@@ -12,7 +12,7 @@ class statisticsOverview {
   }
 }
 
-List<statisticsOverview> statisticsData = [
+List<statisticsOverview> statisticsDataTax = [
   statisticsOverview(attribute: "total number of tax payers", data: "1000"),
   statisticsOverview(attribute: "Water tax pending cases", data: "20"),
   statisticsOverview(attribute: "Property tax pending cases", data: "16"),

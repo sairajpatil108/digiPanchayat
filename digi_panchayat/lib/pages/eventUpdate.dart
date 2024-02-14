@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:digi_panchayat/data/events.dart';
 import 'package:flutter/material.dart';
 
@@ -23,19 +25,19 @@ class _eventUpdateState extends State<eventUpdate> {
               children: <Widget>[
                 ElevatedButton(
                     style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(Size(400, 100)),
+                      fixedSize: MaterialStateProperty.all(const Size(400, 100)),
                     ),
                     onPressed: () {},
-                    child: Text("Villager's Database")),
-                SizedBox(
+                    child:const Text("Villager's Database")),
+              const  SizedBox(
                   height: 30,
                 ),
                 ElevatedButton(
                     style: ButtonStyle(
-                      fixedSize: MaterialStateProperty.all(Size(400, 100)),
+                      fixedSize: MaterialStateProperty.all(const Size(400, 100)),
                     ),
                     onPressed: () {},
-                    child: Text("Tax"))
+                    child:const Text("Tax"))
               ],
             ),
           ),
@@ -46,7 +48,7 @@ class _eventUpdateState extends State<eventUpdate> {
               child: Padding(
                 padding:
                     const EdgeInsets.all(10.0).copyWith(left: 40, right: 40),
-                child: Text("Events"),
+                child:const Text("Events"),
               ),
             ),
             Container(
@@ -54,10 +56,10 @@ class _eventUpdateState extends State<eventUpdate> {
               height: MediaQuery.of(context).size.height * 0.6,
               color: Theme.of(context).colorScheme.background,
               child: Padding(
-                padding: EdgeInsets.all(10.0),
+                padding:const EdgeInsets.all(10.0),
                 child: Card(
                   child: Padding(
-                    padding: EdgeInsets.all(20.0),
+                    padding:const EdgeInsets.all(20.0),
                     child: ListView.builder(
                       itemCount: eventData.length,
                       itemBuilder: (context, index) {

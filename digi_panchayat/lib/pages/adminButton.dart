@@ -34,6 +34,10 @@ class _adminButtonState extends State<adminButton> {
                       title: logIn ? null : const Text('Login '),
                       content: logIn
                           ? ElevatedButton(
+                              style: ButtonStyle(
+                                fixedSize: MaterialStateProperty.all(
+                                    const Size(100, 60)),
+                              ),
                               onPressed: () {
                                 setState(() {
                                   logIn = !logIn;
@@ -95,7 +99,7 @@ class _logoutCardState extends State<logoutCard> {
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Icon(Icons.person),
+            Icon(Icons.login_rounded),
             Row(
               children: [
                 Padding(
@@ -103,7 +107,7 @@ class _logoutCardState extends State<logoutCard> {
                   child: Icon(Icons.circle, size: 10, color: Colors.red),
                 ),
                 Text(
-                  "Admin",
+                  "Login",
                   style:
                       TextStyle(fontWeight: FontWeight.w400, color: Colors.red),
                 )

@@ -1,8 +1,8 @@
 // ignore_for_file: camel_case_types
 
 import 'package:digi_panchayat/main.dart';
-import 'package:digi_panchayat/pages/adminButton.dart';
-import 'package:digi_panchayat/pages/dashbord.dart';
+import 'package:digi_panchayat/view/adminButton.dart';
+import 'package:digi_panchayat/view/dashbord.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

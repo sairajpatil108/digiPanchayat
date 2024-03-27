@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:digi_panchayat/data/statsticsOverviewTax.dart';
+import 'package:digi_panchayat/view/villagerUI.dart';
 import 'package:flutter/material.dart';
 
 class taxPage extends StatefulWidget {
@@ -68,8 +69,8 @@ class _taxPageState extends State<taxPage> {
                           children: [
                             ElevatedButton(
                                 style: ButtonStyle(
-                                  fixedSize:
-                                      MaterialStateProperty.all(const Size(200, 100)),
+                                  fixedSize: MaterialStateProperty.all(
+                                      const Size(200, 100)),
                                 ),
                                 onPressed: () {},
                                 child: const Text("View Tax Database")),
@@ -78,8 +79,8 @@ class _taxPageState extends State<taxPage> {
                             ),
                             ElevatedButton(
                                 style: ButtonStyle(
-                                  fixedSize:
-                                      MaterialStateProperty.all(const Size(200, 100)),
+                                  fixedSize: MaterialStateProperty.all(
+                                      const Size(200, 100)),
                                 ),
                                 onPressed: () {},
                                 child: const Text("Update Tax Database")),
@@ -92,21 +93,27 @@ class _taxPageState extends State<taxPage> {
                           children: [
                             ElevatedButton(
                                 style: ButtonStyle(
-                                  fixedSize:
-                                      MaterialStateProperty.all(const Size(200, 100)),
+                                  fixedSize: MaterialStateProperty.all(
+                                      const Size(200, 100)),
                                 ),
                                 onPressed: () {},
-                                child:const Text("Add new Tax payer")),
+                                child: const Text("Add new Tax payer")),
                             const SizedBox(
                               width: 30,
                             ),
                             ElevatedButton(
                                 style: ButtonStyle(
-                                  fixedSize:
-                                      MaterialStateProperty.all(const Size(200, 100)),
+                                  fixedSize: MaterialStateProperty.all(
+                                      const Size(200, 100)),
                                 ),
-                                onPressed: () {},
-                                child:const Text("view stastics")),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              VillagerListPage()));
+                                },
+                                child: const Text("view stastics")),
                           ],
                         )
                       ],
@@ -135,10 +142,10 @@ class _taxPageState extends State<taxPage> {
                       height: MediaQuery.of(context).size.height * 0.6,
                       color: Theme.of(context).colorScheme.background,
                       child: Padding(
-                        padding:const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: Card(
                           child: Padding(
-                            padding:const EdgeInsets.all(20.0),
+                            padding: const EdgeInsets.all(20.0),
                             child: ListView.builder(
                               itemCount: statisticsDataTax.length,
                               itemBuilder: (context, index) {

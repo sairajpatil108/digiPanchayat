@@ -1,4 +1,4 @@
-import 'package:digi_panchayat/pages/homepage.dart';
+import 'package:digi_panchayat/view/homepage.dart';
 import 'package:digi_panchayat/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

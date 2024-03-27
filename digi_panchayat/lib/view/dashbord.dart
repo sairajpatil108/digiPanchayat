@@ -1,8 +1,8 @@
 // ignore_for_file: camel_case_types, unused_field
 
-import 'package:digi_panchayat/pages/eventsWidget.dart';
-import 'package:digi_panchayat/pages/taxPage.dart';
-import 'package:digi_panchayat/pages/villagersDatabase.dart';
+import 'package:digi_panchayat/view/eventsWidget.dart';
+import 'package:digi_panchayat/view/taxPage.dart';
+import 'package:digi_panchayat/view/villagersDatabase.dart';
 import 'package:flutter/material.dart';
 
 class dashbord extends StatefulWidget {

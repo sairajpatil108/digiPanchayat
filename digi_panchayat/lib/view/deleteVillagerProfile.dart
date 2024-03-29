@@ -1,4 +1,6 @@
 
+// ignore_for_file: use_key_in_widget_constructors, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,7 +12,7 @@ class DeleteVillagerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Delete Villager Profile'),
+        title: const Text('Delete Villager Profile'),
       ),
       body: Center(
         child: ElevatedButton(
@@ -20,7 +22,7 @@ class DeleteVillagerScreen extends StatelessWidget {
               builder: (context) => _DeleteConfirmationDialog(),
             );
           },
-          child: Text("Delete Profile"),
+          child: const Text("Delete Profile"),
         ),
       ),
     );
@@ -65,12 +67,12 @@ class __DeleteConfirmationDialogState extends State<_DeleteConfirmationDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Delete Villager Profile'),
+      title: const Text('Delete Villager Profile'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Enter the ID of the villager to delete:'),
+          const Text('Enter the ID of the villager to delete:'),
           TextFormField(
             controller: idController,
             keyboardType: TextInputType.number,
@@ -86,11 +88,11 @@ class __DeleteConfirmationDialogState extends State<_DeleteConfirmationDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
         ElevatedButton(
           onPressed: _deleteProfile,
-          child: Text('Delete'),
+          child: const Text('Delete'),
         ),
       ],
     );

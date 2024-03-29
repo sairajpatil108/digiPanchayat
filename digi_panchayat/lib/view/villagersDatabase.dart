@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, prefer_const_constructors
+// ignore_for_file: camel_case_types, prefer_const_constructors, use_build_context_synchronously
 
 import 'package:digi_panchayat/data/statisticsOverviewVillagers.dart';
 import 'package:digi_panchayat/view/createVillagerPage.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -33,27 +35,27 @@ class _VillagerListPageState extends State<VillagerListPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Create Villager"),
-          content: Text("Are you sure you want to create a new villager?"),
+          title: const Text("Create Villager"),
+          content: const Text("Are you sure you want to create a new villager?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
                 // Perform create operation here
                 Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('Villager created successfully'),
                 ));
                 setState(() {
                   _villagersFuture = fetchVillagers();
                 });
               },
-              child: Text("Create"),
+              child: const Text("Create"),
             ),
           ],
         );
@@ -67,27 +69,27 @@ class _VillagerListPageState extends State<VillagerListPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Update Villager"),
-          content: Text("Are you sure you want to update this villager?"),
+          title: const Text("Update Villager"),
+          content: const Text("Are you sure you want to update this villager?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
                 // Perform update operation here
                 Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('Villager updated successfully'),
                 ));
                 setState(() {
                   _villagersFuture = fetchVillagers();
                 });
               },
-              child: Text("Update"),
+              child: const Text("Update"),
             ),
           ],
         );
@@ -101,27 +103,27 @@ class _VillagerListPageState extends State<VillagerListPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Delete Villager"),
-          content: Text("Are you sure you want to delete this villager?"),
+          title: const Text("Delete Villager"),
+          content: const Text("Are you sure you want to delete this villager?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
                 // Perform delete operation here
                 Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('Villager deleted successfully'),
                 ));
                 setState(() {
                   _villagersFuture = fetchVillagers();
                 });
               },
-              child: Text("Delete"),
+              child: const Text("Delete"),
             ),
           ],
         );
@@ -133,13 +135,13 @@ class _VillagerListPageState extends State<VillagerListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Villagers'),
+        title: const Text('Villagers'),
       ),
       body: FutureBuilder<List<Villager>>(
         future: _villagersFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
@@ -154,7 +156,7 @@ class _VillagerListPageState extends State<VillagerListPage> {
                 ),
                 ElevatedButton(
                   onPressed: _createVillager,
-                  child: Text('Create Villager'),
+                  child: const Text('Create Villager'),
                 ),
               ],
             );
@@ -177,7 +179,7 @@ class VillagerDataTable extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: DataTable(
-        columns: [
+        columns: const [
           DataColumn(label: Text('ID')),
           DataColumn(label: Text('Name')),
           DataColumn(label: Text('Address')),
@@ -201,11 +203,11 @@ class VillagerDataTable extends StatelessWidget {
             DataCell(Row(
               children: [
                 IconButton(
-                  icon: Icon(Icons.edit),
+                  icon: const Icon(Icons.edit),
                   onPressed: () => onUpdate(villager),
                 ),
                 IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: () => onDelete(villager.id),
                 ),
               ],

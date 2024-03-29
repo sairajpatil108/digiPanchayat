@@ -1,7 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:digi_panchayat/data/statsticsOverviewTax.dart';
-import 'package:digi_panchayat/view/villagerUI.dart';
+import 'package:digi_panchayat/view/stastics.dart';
 import 'package:flutter/material.dart';
 
 class taxPage extends StatefulWidget {
@@ -111,7 +111,7 @@ class _taxPageState extends State<taxPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              VillagerListPage()));
+                                              VillagerStatisticsScreen()));
                                 },
                                 child: const Text("view stastics")),
                           ],

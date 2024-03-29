@@ -2,6 +2,10 @@
 
 import 'package:flutter/material.dart';
 
+
+  bool logIn = true;
+
+
 class adminButton extends StatefulWidget {
   const adminButton({super.key});
 
@@ -10,7 +14,7 @@ class adminButton extends StatefulWidget {
 }
 
 class _adminButtonState extends State<adminButton> {
-  bool logIn = true;
+
 
   void toggleLoginState() {
     setState(() {

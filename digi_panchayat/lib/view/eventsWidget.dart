@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, use_build_context_synchronously, avoid_print, unused_element
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -119,10 +121,10 @@ class _EventsWidgetState extends State<EventsWidget> {
                   Expanded(
                     child: TextFormField(
                       controller: _nameController,
-                      decoration: InputDecoration(labelText: 'Title'),
+                      decoration: const InputDecoration(labelText: 'Title'),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: InkWell(
                       borderRadius: BorderRadius.circular(15),
@@ -157,14 +159,14 @@ class _EventsWidgetState extends State<EventsWidget> {
                           children: [
                             Expanded(
                               child: ListTile(
-                                title: Text('Pick Date & Time'),
+                                title: const Text('Pick Date & Time'),
                                 subtitle: Text(
                                   '${_selectedDateTime.year}-${_selectedDateTime.month}-${_selectedDateTime.day} ${_selectedDateTime.hour}:${_selectedDateTime.minute}',
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                            const Padding(
+                              padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
                               child: Icon(
                                 Icons.calendar_month,
                                 size: 40,
@@ -180,7 +182,7 @@ class _EventsWidgetState extends State<EventsWidget> {
             ),
             ElevatedButton(
               onPressed: _createItem,
-              child: Text('Create Event'),
+              child: const Text('Create Event'),
             ),
             // List of existing items
             Expanded(
@@ -192,101 +194,10 @@ class _EventsWidgetState extends State<EventsWidget> {
                     title: Text(item['name']), // Access name property from JSON
                     subtitle: Text(item[
                         'description']), // Access description property from JSON
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Update Item'),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      TextField(
-                                        controller: TextEditingController(
-                                            text: item['name']),
-                                        onChanged: (value) {
-                                          // Handle text field changes
-                                          setState(() {
-                                            item['name'] = value;
-                                          });
-                                        },
-                                        decoration:
-                                            InputDecoration(labelText: 'Name'),
-                                      ),
-                                      ListTile(
-                                        title: Text('Date & Time'),
-                                        subtitle: Text(
-                                          '${DateTime.parse(item['description']).year}-${DateTime.parse(item['description']).month}-${DateTime.parse(item['description']).day} ${DateTime.parse(item['description']).hour}:${DateTime.parse(item['description']).minute}',
-                                        ),
-                                        onTap: () async {
-                                          final DateTime? picked =
-                                              await showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.parse(
-                                                item['description']),
-                                            firstDate: DateTime(2000),
-                                            lastDate: DateTime(2101),
-                                          );
-                                          if (picked != null) {
-                                            final TimeOfDay? pickedTime =
-                                                await showTimePicker(
-                                              context: context,
-                                              initialTime:
-                                                  TimeOfDay.fromDateTime(
-                                                      DateTime.parse(
-                                                          item['description'])),
-                                            );
-                                            if (pickedTime != null) {
-                                              setState(() {
-                                                item['description'] = DateTime(
-                                                  picked.year,
-                                                  picked.month,
-                                                  picked.day,
-                                                  pickedTime.hour,
-                                                  pickedTime.minute,
-                                                ).toString();
-                                              });
-                                            }
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('Cancel'),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        _updateItem(
-                                            item['id'],
-                                            item['name'],
-                                            DateTime.parse(
-                                                item['description']));
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('Update'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () => _deleteItem(
-                              item['id']), // Call delete function with item ID
-                        ),
-                      ],
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () => _deleteItem(
+                          item['id']), // Call delete function with item ID
                     ),
                   );
                 },

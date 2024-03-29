@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print, use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -103,7 +105,7 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
         await updateVillager(
             name, address, gender, dob, landHolding, familyId, income);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Villager updated successfully!'),
           ),
         );
@@ -121,10 +123,10 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Update Villager'),
+        title: const Text('Update Villager'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Center(
@@ -139,25 +141,25 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
                   children: [
                     TextFormField(
                       controller: nameController,
-                      decoration: InputDecoration(labelText: 'Name'),
+                      decoration: const InputDecoration(labelText: 'Name'),
                       validator: (value) =>
                           value!.isEmpty ? 'Please enter a name' : null,
                     ),
                     TextFormField(
                       controller: addressController,
-                      decoration: InputDecoration(labelText: 'Address'),
+                      decoration: const InputDecoration(labelText: 'Address'),
                       validator: (value) =>
                           value!.isEmpty ? 'Please enter an address' : null,
                     ),
                     TextFormField(
                       controller: genderController,
-                      decoration: InputDecoration(labelText: 'Gender'),
+                      decoration: const InputDecoration(labelText: 'Gender'),
                       validator: (value) =>
                           value!.isEmpty ? 'Please enter gender' : null,
                     ),
                     TextFormField(
                       controller: dobController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           labelText: 'Date of Birth (YYYY-MM-DD)'),
                       validator: (value) =>
                           value!.isEmpty ? 'Please enter date of birth' : null,
@@ -165,7 +167,7 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
                     TextFormField(
                       controller: landHoldingController,
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           labelText: 'Land Holding (in hectares)'),
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -183,7 +185,7 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
                     TextFormField(
                       controller: familyIdController,
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(labelText: 'Family ID'),
+                      decoration: const InputDecoration(labelText: 'Family ID'),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter family ID';
@@ -200,7 +202,7 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
                     TextFormField(
                       controller: incomeController,
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(labelText: 'Income'),
+                      decoration: const InputDecoration(labelText: 'Income'),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter income';
@@ -218,7 +220,7 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
                       padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                       child: ElevatedButton(
                         onPressed: handleSubmit,
-                        child: Text('Update Villager'),
+                        child: const Text('Update Villager'),
                       ),
                     ),
                   ],

@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-// Replace with your actual base URL (e.g., http://localhost:3001)
+
 const baseUrl = '';
 
 class DeleteVillagerScreen extends StatelessWidget {
@@ -51,7 +51,7 @@ class __DeleteConfirmationDialogState extends State<_DeleteConfirmationDialog> {
             content: Text('Villager with ID $id deleted successfully!'),
           ),
         );
-        Navigator.of(context).pop(); // Close the dialog
+        Navigator.of(context).pop(); 
       } else {
         throw Exception('Failed to delete villager');
       }

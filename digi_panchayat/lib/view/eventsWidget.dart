@@ -30,17 +30,15 @@ class _EventsWidgetState extends State<EventsWidget> {
         _items = jsonDecode(response.body);
       });
     } else {
-      // Handle errors here (e.g., show a snackbar)
       print(response.body);
     }
   }
 
-  // Function to create a new item
+
   Future<void> _createItem() async {
     final name = _nameController.text;
 
     if (name.isEmpty) {
-      // Handle empty input
       return;
     }
 
@@ -59,7 +57,6 @@ class _EventsWidgetState extends State<EventsWidget> {
       _nameController.clear();
       _fetchItems(); // Refresh the list after creation
     } else {
-      // Handle errors here
       print(response.body);
     }
   }
@@ -72,7 +69,6 @@ class _EventsWidgetState extends State<EventsWidget> {
     if (response.statusCode == 200) {
       _fetchItems(); // Refresh the list after deletion
     } else {
-      // Handle errors here
       print(response.body);
     }
   }
@@ -92,7 +88,6 @@ class _EventsWidgetState extends State<EventsWidget> {
     if (response.statusCode == 200) {
       _fetchItems(); // Refresh the list after update
     } else {
-      // Handle errors here
       print(response.body);
     }
   }
@@ -105,15 +100,13 @@ class _EventsWidgetState extends State<EventsWidget> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              // Add this line to set the border color
               color: Theme.of(context).colorScheme.secondaryContainer,
-              width: 1.5, // Optional: specify border width
+              width: 1.5, 
             )),
         height: MediaQuery.of(context).size.height * 0.6,
         width: MediaQuery.of(context).size.width * 0.43,
         child: Column(
           children: [
-            // Form for creating new items
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -186,21 +179,23 @@ class _EventsWidgetState extends State<EventsWidget> {
             ),
             // List of existing items
             Expanded(
-              child: ListView.builder(
-                itemCount: _items.length,
-                itemBuilder: (context, index) {
-                  final item = _items[index];
-                  return ListTile(
-                    title: Text(item['name']), // Access name property from JSON
-                    subtitle: Text(item[
-                        'description']), // Access description property from JSON
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () => _deleteItem(
-                          item['id']), // Call delete function with item ID
-                    ),
-                  );
-                },
+              child: Card(
+                child: ListView.builder(
+                  itemCount: _items.length,
+                  itemBuilder: (context, index) {
+                    final item = _items[index];
+                    return ListTile(
+                      title: Text(item['name']), // Access name property from JSON
+                      subtitle: Text(item[
+                          'description']), // Access description property from JSON
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () => _deleteItem(
+                            item['id']), // Call delete function with item ID
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ],

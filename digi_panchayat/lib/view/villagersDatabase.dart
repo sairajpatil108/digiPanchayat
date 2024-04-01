@@ -1,7 +1,7 @@
 // ignore_for_file: camel_case_types, prefer_const_constructors, use_build_context_synchronously
 
-import 'package:digi_panchayat/data/statisticsOverviewVillagers.dart';
 import 'package:digi_panchayat/view/createVillagerPage.dart';
+import 'package:digi_panchayat/view/stasticsVillagers.dart';
 import 'package:digi_panchayat/view/updateVillagerProfile.dart';
 import 'package:digi_panchayat/view/viewAllProfiles.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +61,7 @@ class _villagersDatabasePageState extends State<villagersDatabasePage> {
               children: <Widget>[
                 Expanded(child: Container()),
                 Container(
-                  width: MediaQuery.of(context).size.width / 2,
+                  width: MediaQuery.of(context).size.width / 2.5,
                   height: MediaQuery.of(context).size.height * 0.8,
                   color: Theme.of(context).colorScheme.background,
                   child: Center(
@@ -173,6 +173,12 @@ class _villagersDatabasePageState extends State<villagersDatabasePage> {
                   ),
                 ),
                 Expanded(child: Container()),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  width: 2,
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                ),
+                Expanded(child: Container()),
                 Column(
                   children: [
                     Card(
@@ -189,34 +195,12 @@ class _villagersDatabasePageState extends State<villagersDatabasePage> {
                         ),
                       ),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 2.5,
-                      height: MediaQuery.of(context).size.height * 0.6,
-                      color: Theme.of(context).colorScheme.background,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Card(
-                          child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: ListView.builder(
-                                itemCount: statisticsDataVillagers.length,
-                                itemBuilder: (context, index) {
-                                  final statistics =
-                                      statisticsDataVillagers[index];
-                                  return Card(
-                                    color:
-                                        Theme.of(context).colorScheme.surface,
-                                    child: ListTile(
-                                      title: Text(statistics.attribute),
-                                      subtitle: Text(statistics.data),
-                                      // You can add more ListTile customization here
-                                    ),
-                                  );
-                                },
-                              )),
-                        ),
-                      ),
-                    ),
+                    //
+                    ///
+                    ///
+                    ///
+                    ///
+                    VillagerStatisticsWidget()
                   ],
                 ),
               ],

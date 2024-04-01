@@ -1,12 +1,9 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-// Replace with your actual base URL (e.g., http://localhost:3001)
 const baseUrl = 'http://localhost:3001';
+
 
 class VillagerListScreen extends StatefulWidget {
   @override
@@ -54,6 +51,7 @@ class _VillagerListScreenState extends State<VillagerListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+         toolbarHeight: MediaQuery.of(context).size.height * 0.15,
         title: const Text('Villager List'),
         actions: [
           Padding(
@@ -84,7 +82,9 @@ class _VillagerListScreenState extends State<VillagerListScreen> {
                   Border.all(color: Theme.of(context).colorScheme.onBackground),
               borderRadius: BorderRadius.circular(10)),
           child: SingleChildScrollView(
-            child: Center(
+            child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal, 
+                    
               child: DataTable(
                 columns: const <DataColumn>[
                   DataColumn(label: Text('ID')),
@@ -92,9 +92,11 @@ class _VillagerListScreenState extends State<VillagerListScreen> {
                   DataColumn(label: Text('Address')),
                   DataColumn(label: Text('Gender')),
                   DataColumn(label: Text('Date of Birth')),
+                  DataColumn(label: Text('Phone')), // Added phone column
                   DataColumn(label: Text('Land Holding')),
                   DataColumn(label: Text('Family ID')),
                   DataColumn(label: Text('Income')),
+                  DataColumn(label: Text('Email')), // Added email column
                 ],
                 rows: filteredVillagers
                     .map(
@@ -104,9 +106,11 @@ class _VillagerListScreenState extends State<VillagerListScreen> {
                         DataCell(Text(villager['address'].toString())),
                         DataCell(Text(villager['gender'].toString())),
                         DataCell(Text(villager['dob'].toString())),
+                        DataCell(Text(villager['phone'].toString())), // Added phone cell
                         DataCell(Text(villager['land_holding'].toString())),
                         DataCell(Text(villager['family_id'].toString())),
                         DataCell(Text(villager['income'].toString())),
+                        DataCell(Text(villager['email'].toString())), // Added email cell
                       ]),
                     )
                     .toList(),

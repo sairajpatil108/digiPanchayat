@@ -1,7 +1,10 @@
 // ignore_for_file: camel_case_types
 
 import 'package:digi_panchayat/data/statsticsOverviewTax.dart';
-import 'package:digi_panchayat/view/stastics.dart';
+import 'package:digi_panchayat/view/createTaxpayer.dart';
+import 'package:digi_panchayat/view/stasticsTax.dart';
+import 'package:digi_panchayat/view/updateTaxpayer.dart';
+import 'package:digi_panchayat/view/viewAllTaxpayers.dart';
 import 'package:flutter/material.dart';
 
 class taxPage extends StatefulWidget {
@@ -58,7 +61,7 @@ class _taxPageState extends State<taxPage> {
               children: <Widget>[
                 Expanded(child: Container()),
                 Container(
-                  width: MediaQuery.of(context).size.width / 2,
+                  width: MediaQuery.of(context).size.width * 0.43,
                   height: MediaQuery.of(context).size.height * 0.8,
                   color: Theme.of(context).colorScheme.background,
                   child: Center(
@@ -72,18 +75,61 @@ class _taxPageState extends State<taxPage> {
                                   fixedSize: MaterialStateProperty.all(
                                       const Size(200, 100)),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              TaxpayerListScreen()));
+                                },
                                 child: const Text("View Tax Database")),
                             const SizedBox(
                               width: 30,
                             ),
                             ElevatedButton(
-                                style: ButtonStyle(
-                                  fixedSize: MaterialStateProperty.all(
-                                      const Size(200, 100)),
-                                ),
-                                onPressed: () {},
-                                child: const Text("Update Tax Database")),
+                              style: ButtonStyle(
+                                fixedSize: MaterialStateProperty.all(
+                                    const Size(200, 100)),
+                              ),
+                              onPressed: () async {
+                                String? taxpayerId; // Declare taxpayerId here
+
+                                // Display the dialog to prompt for taxpayerId
+                                taxpayerId = await showDialog<String>(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text("Enter Taxpayer ID"),
+                                    content: TextField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: const InputDecoration(
+                                          hintText: "Enter ID"),
+                                      onChanged: (value) => taxpayerId = value,
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(context, taxpayerId),
+                                        child: const Text("OK"),
+                                      ),
+                                    ],
+                                  ),
+                                );
+
+                                // Navigate to UpdateTaxpayerScreen only if taxpayerId is provided
+                                if (taxpayerId != null) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          UpdateTaxpayerScreen(
+                                        taxpayerId: int.parse(taxpayerId!),
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              child: const Text("Update existing profile"),
+                            ),
                           ],
                         ),
                         const SizedBox(
@@ -96,7 +142,13 @@ class _taxPageState extends State<taxPage> {
                                   fixedSize: MaterialStateProperty.all(
                                       const Size(200, 100)),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              CreateTaxpayerScreen()));
+                                },
                                 child: const Text("Add new Tax payer")),
                             const SizedBox(
                               width: 30,
@@ -106,13 +158,7 @@ class _taxPageState extends State<taxPage> {
                                   fixedSize: MaterialStateProperty.all(
                                       const Size(200, 100)),
                                 ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              VillagerStatisticsScreen()));
-                                },
+                                onPressed: () {},
                                 child: const Text("view stastics")),
                           ],
                         )
@@ -120,10 +166,16 @@ class _taxPageState extends State<taxPage> {
                     ),
                   ),
                 ),
-                Expanded(child: Container()),
-                Column(
-                  children: [
-                    Card(
+                   Expanded(child: Container()),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  width: 2,
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                ),
+         Expanded(child: Container()),
+               Column(
+                 children: [
+                   Card(
                       child: Padding(
                         padding: const EdgeInsets.all(10.0).copyWith(right: 40),
                         child: const Row(
@@ -137,35 +189,10 @@ class _taxPageState extends State<taxPage> {
                         ),
                       ),
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 2.5,
-                      height: MediaQuery.of(context).size.height * 0.6,
-                      color: Theme.of(context).colorScheme.background,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: ListView.builder(
-                              itemCount: statisticsDataTax.length,
-                              itemBuilder: (context, index) {
-                                final statistics = statisticsDataTax[index];
-                                return Card(
-                                  color: Theme.of(context).colorScheme.surface,
-                                  child: ListTile(
-                                    title: Text(statistics.attribute),
-                                    subtitle: Text(statistics.data),
-                                    // You can add more ListTile customization here
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                   TaxpayerStatisticsWidget(),
+                 ],
+               ),
+               Expanded(child: Container()),
               ],
             )
           ],

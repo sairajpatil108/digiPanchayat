@@ -18,7 +18,7 @@ class _dashbordState extends State<dashbord> {
     return Row(
       children: <Widget>[
         Container(
-          width: MediaQuery.of(context).size.width / 2,
+          width: MediaQuery.of(context).size.width * 0.4,
           height: MediaQuery.of(context).size.height * 0.8,
           color: Theme.of(context).colorScheme.background,
           child: Center(
@@ -57,7 +57,15 @@ class _dashbordState extends State<dashbord> {
             ),
           ),
         ),
+        Expanded(child: Container()),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  width: 2,
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                ),
+                Expanded(child: Container()),
         EventsWidget(),
+         Expanded(child: Container()),
       ],
     );
   }

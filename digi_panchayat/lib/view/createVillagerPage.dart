@@ -1,11 +1,9 @@
-// ignore_for_file: use_key_in_widget_constructors, use_build_context_synchronously
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-// Replace with your actual base URL (e.g., http://localhost:3001)
+
 const baseUrl = 'http://localhost:3001';
 
 class CreateVillagerScreen extends StatefulWidget {
@@ -16,11 +14,13 @@ class CreateVillagerScreen extends StatefulWidget {
 class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  // Text editing controllers for form fields
+ 
   final nameController = TextEditingController();
   final addressController = TextEditingController();
   final genderController = TextEditingController();
   final dobController = TextEditingController();
+  final phoneController = TextEditingController(); // Added phone controller
+  final emailController = TextEditingController(); // Added email controller
   final landHoldingController = TextEditingController();
   final familyIdController = TextEditingController();
   final incomeController = TextEditingController();
@@ -30,6 +30,8 @@ class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
       String address,
       String gender,
       String dob,
+      String phone,
+      String email,
       double landHolding,
       int familyId,
       double income) async {
@@ -43,6 +45,8 @@ class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
         'address': address,
         'gender': gender,
         'dob': dob,
+        'phone': phone, 
+        'email': email, 
         'land_holding': landHolding,
         'family_id': familyId,
         'income': income,
@@ -61,6 +65,8 @@ class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
     addressController.text = '';
     genderController.text = '';
     dobController.text = '';
+    phoneController.text = '';
+    emailController.text = '';
     landHoldingController.text = '';
     familyIdController.text = '';
     incomeController.text = '';
@@ -72,13 +78,15 @@ class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
       String address = addressController.text;
       String gender = genderController.text;
       String dob = dobController.text;
+      String phone = phoneController.text; 
+      String email = emailController.text; 
       double landHolding = double.parse(landHoldingController.text);
       int familyId = int.parse(familyIdController.text);
       double income = double.parse(incomeController.text);
 
       try {
         await createVillager(
-            name, address, gender, dob, landHolding, familyId, income);
+            name, address, gender, dob, phone, email, landHolding, familyId, income);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Villager created successfully!'),
@@ -141,6 +149,20 @@ class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
                           value!.isEmpty ? 'Please enter date of birth' : null,
                     ),
                     TextFormField(
+                      controller: phoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration: const InputDecoration(labelText: 'Phone'),
+                      validator: (value) =>
+                          value!.isEmpty ? 'Please enter phone number' : null,
+                    ),
+                    TextFormField(
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(labelText: 'Email'),
+                      validator: (value) =>
+                          value!.isEmpty ? 'Please enter an email' : null,
+                    ),
+                    TextFormField(
                       controller: landHoldingController,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
@@ -181,13 +203,13 @@ class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
                       decoration: const InputDecoration(labelText: 'Income'),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please enter family ID';
+                          return 'Please enter income';
                         } else {
                           try {
-                            int.parse(value);
+                            double.parse(value);
                             return null;
                           } catch (e) {
-                            return 'Invalid family ID';
+                            return 'Invalid income value';
                           }
                         }
                       },

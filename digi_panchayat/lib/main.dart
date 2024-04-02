@@ -1,5 +1,7 @@
-import 'package:digi_panchayat/pages/homepage.dart';
+import 'package:digi_panchayat/view/adminButton.dart';
+import 'package:digi_panchayat/view/homepage.dart';
 import 'package:digi_panchayat/theme.dart';
+import 'package:digi_panchayat/view/logedOutScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +26,7 @@ class _MyAppState extends State<MyApp> {
         theme: themeNotifier.isDarkMode
             ? ThemeData(useMaterial3: true, colorScheme: darkColorScheme)
             : ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-        home: const homePage(), // Use correct widget name
+        home:logIn?  const homePage() :  const logedOutScreen(), // Use correct widget name
       ),
     );
   }

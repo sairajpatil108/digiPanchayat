@@ -86,8 +86,8 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
         'address': address,
         'gender': gender,
         'dob': dob,
-        'phone': phone, // Added
-        'email': email, // Added
+        'phone': phone, 
+        'email': email, 
         'land_holding': landHolding,
         'family_id': familyId,
         'income': income,

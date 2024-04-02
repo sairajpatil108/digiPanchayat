@@ -1,11 +1,14 @@
-import 'dart:convert';
+// Import necessary libraries
+// ignore_for_file: use_build_context_synchronously, avoid_print, use_key_in_widget_constructors, library_private_types_in_public_api, file_names
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-// Replace with your actual base URL (e.g., http://localhost:3001)
+// Define the base URL
 const baseUrl = 'http://localhost:3001';
 
+// Create a stateful widget for the UpdateVillagerScreen
 class UpdateVillagerScreen extends StatefulWidget {
   final int villagerId;
 
@@ -23,7 +26,7 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
   // Text editing controllers for form fields
   final nameController = TextEditingController();
   final addressController = TextEditingController();
-  final genderController = TextEditingController();
+  String? gender;
   final dobController = TextEditingController();
   final phoneController = TextEditingController(); // Added
   final emailController = TextEditingController(); // Added
@@ -39,13 +42,14 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
 
   Future<void> fetchVillagerDetails() async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl/villagers/${widget.villagerId}'));
+      final response =
+          await http.get(Uri.parse('$baseUrl/villagers/${widget.villagerId}'));
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         setState(() {
           nameController.text = data['name'].toString();
           addressController.text = data['address'].toString();
-          genderController.text = data['gender'].toString();
+          gender = data['gender'].toString();
           dobController.text = data['dob'].toString();
           phoneController.text = data['phone'].toString(); // Added
           emailController.text = data['email'].toString(); // Added
@@ -93,25 +97,46 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
     if (response.statusCode == 200) {
       return response;
     } else {
-      throw Exception('Failed to update villager/villager with ID you have provided might not be present in database');
+      throw Exception(
+          'Failed to update villager/villager with ID you have provided might not be present in database');
     }
   }
 
+  // Function to validate email format
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter an email';
+    } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
+  // Function to validate phone number format
+  String? validatePhoneNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter phone number';
+    } else if (value.length != 10) {
+      return 'Phone number must be 10 digits';
+    }
+    return null;
+  }
+
+  // Function to handle form submission
   void handleSubmit() async {
     if (_formKey.currentState!.validate()) {
       String name = nameController.text;
       String address = addressController.text;
-      String gender = genderController.text;
       String dob = dobController.text;
-      String phone = phoneController.text; // Added
-      String email = emailController.text; // Added
+      String phone = phoneController.text;
+      String email = emailController.text;
       double landHolding = double.parse(landHoldingController.text);
       int familyId = int.parse(familyIdController.text);
       double income = double.parse(incomeController.text);
 
       try {
-        await updateVillager(
-            name, address, gender, dob, phone, email, landHolding, familyId, income);
+        await updateVillager(name, address, gender!, dob, phone, email,
+            landHolding, familyId, income);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Villager updated successfully!'),
@@ -159,11 +184,29 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
                       validator: (value) =>
                           value!.isEmpty ? 'Please enter an address' : null,
                     ),
-                    TextFormField(
-                      controller: genderController,
-                      decoration: const InputDecoration(labelText: 'Gender'),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Please enter gender' : null,
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: 'M',
+                          groupValue: gender,
+                          onChanged: (value) {
+                            setState(() {
+                              gender = value;
+                            });
+                          },
+                        ),
+                        const Text('Male'),
+                        Radio<String>(
+                          value: 'F',
+                          groupValue: gender,
+                          onChanged: (value) {
+                            setState(() {
+                              gender = value;
+                            });
+                          },
+                        ),
+                        const Text('Female'),
+                      ],
                     ),
                     TextFormField(
                       controller: dobController,
@@ -173,16 +216,16 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
                           value!.isEmpty ? 'Please enter date of birth' : null,
                     ),
                     TextFormField(
-                      controller: phoneController, // Added
-                      decoration: const InputDecoration(labelText: 'Phone'), // Added
-                      validator: (value) =>
-                          value!.isEmpty ? 'Please enter phone number' : null, // Added
+                      controller: phoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration: const InputDecoration(labelText: 'Phone'),
+                      validator: validatePhoneNumber,
                     ),
                     TextFormField(
-                      controller: emailController, // Added
-                      decoration: const InputDecoration(labelText: 'Email'), // Added
-                      validator: (value) =>
-                          value!.isEmpty ? 'Please enter email' : null, // Added
+                      controller: emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(labelText: 'Email'),
+                      validator: validateEmail,
                     ),
                     TextFormField(
                       controller: landHoldingController,
@@ -253,6 +296,3 @@ class _UpdateVillagerScreenState extends State<UpdateVillagerScreen> {
     );
   }
 }
-
-
-

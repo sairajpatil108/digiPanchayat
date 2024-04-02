@@ -1,30 +1,33 @@
+// Import necessary libraries
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
+// Define the base URL
 const baseUrl = 'http://localhost:3001';
 
+// Create a stateful widget for the CreateVillagerScreen
 class CreateVillagerScreen extends StatefulWidget {
   @override
   _CreateVillagerScreenState createState() => _CreateVillagerScreenState();
 }
 
 class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
+  // Define a global key for the form
   final _formKey = GlobalKey<FormState>();
 
- 
+  // Initialize text controllers for various fields
   final nameController = TextEditingController();
   final addressController = TextEditingController();
-  final genderController = TextEditingController();
+  String? gender;
   final dobController = TextEditingController();
-  final phoneController = TextEditingController(); // Added phone controller
-  final emailController = TextEditingController(); // Added email controller
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
   final landHoldingController = TextEditingController();
   final familyIdController = TextEditingController();
   final incomeController = TextEditingController();
 
+  // Function to make a POST request to create a villager
   Future<http.Response> createVillager(
       String name,
       String address,
@@ -45,8 +48,8 @@ class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
         'address': address,
         'gender': gender,
         'dob': dob,
-        'phone': phone, 
-        'email': email, 
+        'phone': phone,
+        'email': email,
         'land_holding': landHolding,
         'family_id': familyId,
         'income': income,
@@ -60,10 +63,11 @@ class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
     }
   }
 
+  // Function to clear the form fields
   void clearForm() {
     nameController.text = '';
     addressController.text = '';
-    genderController.text = '';
+    gender = null;
     dobController.text = '';
     phoneController.text = '';
     emailController.text = '';
@@ -72,21 +76,39 @@ class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
     incomeController.text = '';
   }
 
+  // Function to validate the email format
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter an email';
+    } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
+  String? validatePhoneNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter phone number';
+    } else if (value.length != 10) {
+      return 'Phone number must be 10 digits';
+    }
+    return null;
+  }
+  // Function to handle form submission
   void handleSubmit() async {
     if (_formKey.currentState!.validate()) {
       String name = nameController.text;
       String address = addressController.text;
-      String gender = genderController.text;
       String dob = dobController.text;
-      String phone = phoneController.text; 
-      String email = emailController.text; 
+      String phone = phoneController.text;
+      String email = emailController.text;
       double landHolding = double.parse(landHoldingController.text);
       int familyId = int.parse(familyIdController.text);
       double income = double.parse(incomeController.text);
 
       try {
         await createVillager(
-            name, address, gender, dob, phone, email, landHolding, familyId, income);
+            name, address, gender!, dob, phone, email, landHolding, familyId, income);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Villager created successfully!'),
@@ -135,11 +157,29 @@ class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
                       validator: (value) =>
                           value!.isEmpty ? 'Please enter an address' : null,
                     ),
-                    TextFormField(
-                      controller: genderController,
-                      decoration: const InputDecoration(labelText: 'Gender'),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Please enter gender' : null,
+                    Row(
+                      children: [
+                        Radio<String>(
+                          value: 'M',
+                          groupValue: gender,
+                          onChanged: (value) {
+                            setState(() {
+                              gender = value;
+                            });
+                          },
+                        ),
+                        const Text('Male'),
+                        Radio<String>(
+                          value: 'F',
+                          groupValue: gender,
+                          onChanged: (value) {
+                            setState(() {
+                              gender = value;
+                            });
+                          },
+                        ),
+                        const Text('Female'),
+                      ],
                     ),
                     TextFormField(
                       controller: dobController,
@@ -152,15 +192,13 @@ class _CreateVillagerScreenState extends State<CreateVillagerScreen> {
                       controller: phoneController,
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(labelText: 'Phone'),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Please enter phone number' : null,
+                      validator: validatePhoneNumber,
                     ),
                     TextFormField(
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(labelText: 'Email'),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Please enter an email' : null,
+                      validator: validateEmail, // Using validateEmail function
                     ),
                     TextFormField(
                       controller: landHoldingController,

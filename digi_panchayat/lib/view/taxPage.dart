@@ -1,6 +1,5 @@
 // ignore_for_file: camel_case_types
 
-import 'package:digi_panchayat/data/statsticsOverviewTax.dart';
 import 'package:digi_panchayat/view/createTaxpayer.dart';
 import 'package:digi_panchayat/view/stasticsTax.dart';
 import 'package:digi_panchayat/view/updateTaxpayer.dart';
